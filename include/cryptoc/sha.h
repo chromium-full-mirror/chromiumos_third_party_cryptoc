@@ -31,7 +31,9 @@ const uint8_t* SHA_final(SHA_CTX* ctx);
 // NOTE: *digest needs to hold SHA_DIGEST_SIZE bytes.
 const uint8_t* SHA_hash(const void* data, unsigned int len, uint8_t* digest);
 
+#ifndef SHA_DIGEST_SIZE
 #define SHA_DIGEST_SIZE 20
+#endif
 
 #ifdef __cplusplus
 }

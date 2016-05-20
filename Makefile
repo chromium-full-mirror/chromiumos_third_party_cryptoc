@@ -10,7 +10,6 @@ SOURCES += p256_ecdsa.c
 SOURCES += p256_prng.c
 SOURCES += sha.c
 SOURCES += sha256.c
-SOURCES += util.c
 
 # Use V=1 for verbose output
 ifeq ($(V),)

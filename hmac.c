@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include "cryptoc/hmac.h"
-#include "cryptoc/util.h"
 
 #include <string.h>
 #include "cryptoc/sha.h"
@@ -66,6 +65,6 @@ const uint8_t* HMAC_final(LITE_HMAC_CTX* ctx) {
   HASH_init(&ctx->hash);
   HASH_update(&ctx->hash, ctx->opad, sizeof(ctx->opad));
   HASH_update(&ctx->hash, digest, HASH_size(&ctx->hash));
-  always_memset(&ctx->opad[0], 0, sizeof(ctx->opad));  // wipe key
+  memset(&ctx->opad[0], 0, sizeof(ctx->opad));  // wipe key
   return HASH_final(&ctx->hash);
 }
