@@ -20,6 +20,7 @@ endif
 
 CFLAGS += -Iinclude
 CFLAGS += -Wall -Werror
+CFLAGS += -DTHIRD_PARTY
 
 OBJS = $(patsubst %.c,$(obj)/%.o,$(SOURCES))
 DEPS = $(patsubst %.c,$(obj)/%.d,$(SOURCES))
