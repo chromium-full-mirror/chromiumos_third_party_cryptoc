@@ -15,6 +15,7 @@
 #define SECURITY_UTIL_LITE_SHA256_H__
 
 #include <stdint.h>
+#include <stddef.h>
 #include "cryptoc/hash-internal.h"
 
 #ifdef __cplusplus
@@ -24,11 +25,11 @@ extern "C" {
 typedef HASH_CTX LITE_SHA256_CTX;
 
 void SHA256_init(LITE_SHA256_CTX* ctx);
-void SHA256_update(LITE_SHA256_CTX* ctx, const void* data, unsigned int len);
+void SHA256_update(LITE_SHA256_CTX* ctx, const void* data, size_t len);
 const uint8_t* SHA256_final(LITE_SHA256_CTX* ctx);
 
 // Convenience method. Returns digest address.
-const uint8_t* SHA256_hash(const void* data, unsigned int len, uint8_t* digest);
+const uint8_t* SHA256_hash(const void* data, size_t len, uint8_t* digest);
 
 #define SHA256_DIGEST_SIZE 32
 

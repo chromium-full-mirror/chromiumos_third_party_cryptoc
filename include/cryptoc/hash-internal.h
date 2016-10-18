@@ -15,6 +15,7 @@
 #define SECURITY_UTIL_LITE_HASH_INTERNAL_H__
 
 #include <stdint.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,9 +25,9 @@ struct HASH_CTX;  // forward decl
 
 typedef struct HASH_VTAB {
   void (* const init)(struct HASH_CTX*);
-  void (* const update)(struct HASH_CTX*, const void*, unsigned int);
+  void (* const update)(struct HASH_CTX*, const void*, size_t);
   const uint8_t* (* const final)(struct HASH_CTX*);
-  const uint8_t* (* const hash)(const void*, unsigned int, uint8_t*);
+  const uint8_t* (* const hash)(const void*, size_t, uint8_t*);
   unsigned int size;
 } HASH_VTAB;
 

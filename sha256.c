@@ -116,7 +116,7 @@ void SHA256_init(LITE_SHA256_CTX* ctx) {
 }
 
 
-void SHA256_update(LITE_SHA256_CTX* ctx, const void* data, unsigned int len) {
+void SHA256_update(LITE_SHA256_CTX* ctx, const void* data, size_t len) {
   int i = (int) (ctx->count & 63);
   const uint8_t* p = (const uint8_t*)data;
 
@@ -159,7 +159,7 @@ const uint8_t* SHA256_final(LITE_SHA256_CTX* ctx) {
 }
 
 /* Convenience function */
-const uint8_t* SHA256_hash(const void* data, unsigned int len,
+const uint8_t* SHA256_hash(const void* data, size_t len,
                            uint8_t* digest) {
   LITE_SHA256_CTX ctx;
   SHA256_init(&ctx);

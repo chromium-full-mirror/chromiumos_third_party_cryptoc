@@ -87,7 +87,7 @@ void SHA_init(SHA_CTX* ctx) {
 }
 
 
-void SHA_update(SHA_CTX* ctx, const void* data, unsigned int len) {
+void SHA_update(SHA_CTX* ctx, const void* data, size_t len) {
   unsigned int i = (unsigned int)(ctx->count & 63);
   const uint8_t* p = (const uint8_t*)data;
 
@@ -130,7 +130,7 @@ const uint8_t* SHA_final(SHA_CTX* ctx) {
 }
 
 /* Convenience function */
-const uint8_t* SHA_hash(const void* data, unsigned int len, uint8_t* digest) {
+const uint8_t* SHA_hash(const void* data, size_t len, uint8_t* digest) {
   SHA_CTX ctx;
   SHA_init(&ctx);
   SHA_update(&ctx, data, len);
