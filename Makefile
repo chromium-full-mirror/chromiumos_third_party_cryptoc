@@ -10,6 +10,10 @@ SOURCES += p256_ecdsa.c
 SOURCES += p256_prng.c
 SOURCES += sha.c
 SOURCES += sha256.c
+ifneq ($(SHA512_SUPPORT),)
+SOURCES += sha384.c
+SOURCES += sha512.c
+endif
 SOURCES += util.c
 
 # Use V=1 for verbose output

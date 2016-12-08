@@ -34,8 +34,13 @@ typedef struct HASH_VTAB {
 typedef struct HASH_CTX {
   const HASH_VTAB * f;
   uint64_t count;
+#ifndef SHA512_SUPPORT
   uint8_t buf[64];
-  uint32_t state[8];  // upto SHA2
+  uint32_t state[8];  // upto SHA2-256
+#else
+  uint8_t buf[128];
+  uint64_t state[8];  // upto SHA2-512
+#endif
 } HASH_CTX;
 
 #define HASH_init(ctx) (ctx)->f->init(ctx)
