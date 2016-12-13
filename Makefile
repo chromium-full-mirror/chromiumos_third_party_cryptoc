@@ -10,7 +10,7 @@ SOURCES += p256_ecdsa.c
 SOURCES += p256_prng.c
 SOURCES += sha.c
 SOURCES += sha256.c
-ifneq ($(SHA512_SUPPORT),)
+ifeq ($(CONFIG_UPTO_SHA512),y)
 SOURCES += sha384.c
 SOURCES += sha512.c
 endif
@@ -26,6 +26,9 @@ endif
 CFLAGS += -Iinclude
 CFLAGS += -Wall -Werror
 CFLAGS += -DTHIRD_PARTY
+ifeq ($(CONFIG_UPTO_SHA512),y)
+CFLAGS += -DSHA512_SUPPORT
+endif
 
 OBJS = $(patsubst %.c,$(obj)/%.o,$(SOURCES))
 DEPS = $(patsubst %.c,$(obj)/%.d,$(SOURCES))
