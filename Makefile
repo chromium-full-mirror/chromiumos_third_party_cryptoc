@@ -34,13 +34,17 @@ ifeq ($(CONFIG_UPTO_SHA512),y)
 CFLAGS += -DSHA512_SUPPORT
 endif
 
-OBJS = $(patsubst %.c,$(obj)/%.o,$(SOURCES))
-DEPS = $(patsubst %.c,$(obj)/%.d,$(SOURCES))
+OBJS := $(patsubst %.c,$(obj)/%.o,$(SOURCES))
+DEPS := $(patsubst %.c,$(obj)/%.d,$(SOURCES))
 
 # This is the default target
 $(obj)/libcryptoc.a: $(OBJS)
 	@echo "  AR      $(notdir $@)"
 	$(Q)$(AR) scr $@ $^
+
+# Special target which allows to trigger re-compiling of all sources without
+# linking a library.
+objs: $(OBJS)
 
 $(obj):
 	@echo "  MKDIR   $(obj)"
