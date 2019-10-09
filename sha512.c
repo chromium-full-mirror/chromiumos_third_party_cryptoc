@@ -125,7 +125,8 @@ static const HASH_VTAB SHA512_VTAB = {
   SHA512_update,
   SHA512_final,
   SHA512_hash,
-  SHA512_DIGEST_SIZE
+  SHA512_DIGEST_SIZE,
+  SHA512_BLOCK_SIZE
 };
 
 void SHA512_init(LITE_SHA512_CTX* ctx) {

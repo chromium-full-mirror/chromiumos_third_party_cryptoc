@@ -25,10 +25,10 @@ static void SHA1_Transform(SHA_CTX* ctx) {
   int t;
 
   for(t = 0; t < 16; ++t) {
-    uint32_t tmp =  *p++ << 24;
-    tmp |= *p++ << 16;
-    tmp |= *p++ << 8;
-    tmp |= *p++;
+    uint32_t tmp = (uint32_t)(*p++) << 24;
+    tmp |= (uint32_t)(*p++) << 16;
+    tmp |= (uint32_t)(*p++) << 8;
+    tmp |= (uint32_t)(*p++);
     W[t] = tmp;
   }
 
@@ -73,7 +73,10 @@ static const HASH_VTAB SHA_VTAB = {
   SHA_update,
   SHA_final,
   SHA_hash,
-  SHA_DIGEST_SIZE
+  SHA_DIGEST_SIZE,
+#ifdef SHA512_SUPPORT
+  SHA_BLOCK_SIZE,
+#endif
 };
 
 void SHA_init(SHA_CTX* ctx) {
@@ -105,7 +108,7 @@ void SHA_update(SHA_CTX* ctx, const void* data, size_t len) {
 
 const uint8_t* SHA_final(SHA_CTX* ctx) {
   uint8_t *p = ctx->buf;
-  uint64_t cnt = ctx->count * 8;
+  uint64_t cnt = LITE_LShiftU64(ctx->count, 3);
   int i;
 
   SHA_update(ctx, (uint8_t*)"\x80", 1);
@@ -113,8 +116,8 @@ const uint8_t* SHA_final(SHA_CTX* ctx) {
     SHA_update(ctx, (uint8_t*)"\0", 1);
   }
   for (i = 0; i < 8; ++i) {
-    uint8_t tmp = (uint8_t) (cnt >> 56);
-    cnt <<= 8;
+    uint8_t tmp = (uint8_t) LITE_RShiftU64(cnt, 56);
+    cnt = LITE_LShiftU64(cnt, 8);
     SHA_update(ctx, &tmp, 1);
   }
 
