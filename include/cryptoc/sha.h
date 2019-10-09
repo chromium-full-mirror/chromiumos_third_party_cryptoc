@@ -34,6 +34,7 @@ const uint8_t* SHA_hash(const void* data, size_t len, uint8_t* digest);
 #ifndef SHA_DIGEST_SIZE
 #define SHA_DIGEST_SIZE 20
 #endif
+#define SHA_BLOCK_SIZE 64
 
 #ifdef __cplusplus
 }

@@ -27,7 +27,8 @@ static const HASH_VTAB SHA384_VTAB = {
   SHA512_update,
   SHA512_final,
   SHA384_hash,
-  SHA384_DIGEST_SIZE
+  SHA384_DIGEST_SIZE,
+  SHA384_BLOCK_SIZE
 };
 
 void SHA384_init(LITE_SHA384_CTX* ctx) {
