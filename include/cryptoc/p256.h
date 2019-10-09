@@ -140,9 +140,15 @@ int p256_is_valid_point(const p256_int* x, const p256_int* y);
 // Outputs big-endian binary form. No leading zero skips.
 void p256_to_bin(const p256_int* src, uint8_t dst[P256_NBYTES]);
 
+// Outputs little-endian binary form. No leading zero skips.
+void p256_to_le_bin(const p256_int* src, uint8_t dst[P256_NBYTES]);
+
 // Reads from big-endian binary form,
 // thus pre-pad with leading zeros if short.
 void p256_from_bin(const uint8_t src[P256_NBYTES], p256_int* dst);
+
+// Reads from little-endian binary form.
+void p256_from_le_bin(const uint8_t src[P256_NBYTES], p256_int* dst);
 
 #define P256_DIGITS(x) ((x)->a)
 #define P256_DIGIT(x,y) ((x)->a[y])

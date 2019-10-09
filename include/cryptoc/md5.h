@@ -14,8 +14,8 @@
 #ifndef SECURITY_UTIL_LITE_MD5_H__
 #define SECURITY_UTIL_LITE_MD5_H__
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 #include "cryptoc/hash-internal.h"
 
 #ifdef __cplusplus
@@ -33,6 +33,7 @@ const uint8_t* MD5_final(LITE_MD5_CTX* ctx);
 const uint8_t* MD5_hash(const void* data, size_t len, uint8_t* digest);
 
 #define MD5_DIGEST_SIZE 16
+#define MD5_BLOCK_SIZE 64
 
 #ifdef __cplusplus
 }
