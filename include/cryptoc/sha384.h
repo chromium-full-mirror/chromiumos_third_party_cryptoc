@@ -32,6 +32,7 @@ const uint8_t* SHA384_final(LITE_SHA384_CTX* ctx);
 const uint8_t* SHA384_hash(const void* data, size_t len, uint8_t* digest);
 
 #define SHA384_DIGEST_SIZE 48
+#define SHA384_BLOCK_SIZE 128
 
 #ifdef __cplusplus
 }

@@ -14,8 +14,16 @@
 #ifndef SECURITY_UTIL_LITE_HASH_INTERNAL_H__
 #define SECURITY_UTIL_LITE_HASH_INTERNAL_H__
 
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
+
+#ifdef LITE_EMULATED_64BIT_OPS
+#define LITE_LShiftU64(a, b) LShiftU64((a), (b))
+#define LITE_RShiftU64(a, b) RShiftU64((a), (b))
+#else
+#define LITE_LShiftU64(a, b) ((a) << (b))
+#define LITE_RShiftU64(a, b) ((a) >> (b))
+#endif  // LITE_EMULATED_64BIT_OPS
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,6 +37,9 @@ typedef struct HASH_VTAB {
   const uint8_t* (* const final)(struct HASH_CTX*);
   const uint8_t* (* const hash)(const void*, size_t, uint8_t*);
   unsigned int size;
+#ifdef SHA512_SUPPORT
+  unsigned int block_size;
+#endif
 } HASH_VTAB;
 
 typedef struct HASH_CTX {
@@ -48,6 +59,11 @@ typedef struct HASH_CTX {
 #define HASH_final(ctx) (ctx)->f->final(ctx)
 #define HASH_hash(data, len, digest) (ctx)->f->hash(data, len, digest)
 #define HASH_size(ctx) (ctx)->f->size
+#ifdef SHA512_SUPPORT
+#define HASH_block_size(ctx) (ctx)->f->block_size
+#else
+#define HASH_block_size(ctx) sizeof((ctx)->buf)
+#endif
 
 #ifdef __cplusplus
 }

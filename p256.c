@@ -400,6 +400,34 @@ int p256_is_valid_point(const p256_int* x, const p256_int* y) {
   return p256_cmp(&y2, &x3) == 0;
 }
 
+void p256_to_bin(const p256_int* src, uint8_t dst[P256_NBYTES]) {
+  int i;
+  uint8_t* p = &dst[0];
+
+  for (i = P256_NDIGITS - 1; i >= 0; --i) {
+    p256_digit digit = P256_DIGIT(src, i);
+    p[0] = (uint8_t)(digit >> 24);
+    p[1] = (uint8_t)(digit >> 16);
+    p[2] = (uint8_t)(digit >> 8);
+    p[3] = (uint8_t)(digit);
+    p += 4;
+  }
+}
+
+void p256_to_le_bin(const p256_int* src, uint8_t dst[P256_NBYTES]) {
+  int i;
+  uint8_t* p = &dst[0];
+
+  for (i = 0; i < P256_NDIGITS; ++i) {
+    p256_digit digit = P256_DIGIT(src, i);
+    p[0] = (uint8_t)(digit);
+    p[1] = (uint8_t)(digit >> 8);
+    p[2] = (uint8_t)(digit >> 16);
+    p[3] = (uint8_t)(digit >> 24);
+    p += 4;
+  }
+}
+
 void p256_from_bin(const uint8_t src[P256_NBYTES], p256_int* dst) {
   int i;
   const uint8_t* p = &src[0];
@@ -414,16 +442,16 @@ void p256_from_bin(const uint8_t src[P256_NBYTES], p256_int* dst) {
   }
 }
 
-void p256_to_bin(const p256_int* src, uint8_t dst[P256_NBYTES]) {
+void p256_from_le_bin(const uint8_t src[P256_NBYTES], p256_int* dst) {
   int i;
-  uint8_t* p = &dst[0];
+  const uint8_t* p = &src[0];
 
-  for (i = P256_NDIGITS - 1; i >= 0; --i) {
-    p256_digit digit = P256_DIGIT(src, i);
-    p[0] = (uint8_t)(digit >> 24);
-    p[1] = (uint8_t)(digit >> 16);
-    p[2] = (uint8_t)(digit >> 8);
-    p[3] = (uint8_t)(digit);
+  for (i = 0; i < P256_NDIGITS; ++i) {
+    P256_DIGIT(dst, i) =
+        (uint32_t)p[0] |
+        ((uint32_t)p[1] << 8) |
+        ((uint32_t)p[2] << 16) |
+        ((uint32_t)p[3] << 24);
     p += 4;
   }
 }

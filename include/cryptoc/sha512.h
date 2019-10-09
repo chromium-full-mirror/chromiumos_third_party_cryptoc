@@ -32,6 +32,7 @@ const uint8_t* SHA512_final(LITE_SHA512_CTX* ctx);
 const uint8_t* SHA512_hash(const void* data, size_t len, uint8_t* digest);
 
 #define SHA512_DIGEST_SIZE 64
+#define SHA512_BLOCK_SIZE 128
 
 #ifdef __cplusplus
 }

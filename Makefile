@@ -8,11 +8,13 @@ CC ?= $(CROSS_COMPILE)gcc
 AR ?= $(CROSS_COMPILE)ar
 
 SOURCES = hmac.c
+SOURCES += md5.c
 SOURCES += p256.c
 SOURCES += p256_ec.c
 SOURCES += p256_ecdsa.c
 SOURCES += p256_prng.c
 SOURCES += sha.c
+SOURCES += sha224.c
 SOURCES += sha256.c
 ifeq ($(CONFIG_UPTO_SHA512),y)
 SOURCES += sha384.c
