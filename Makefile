@@ -52,7 +52,8 @@ $(obj):
 
 $(obj)/%.d $(obj)/%.o: %.c | $(obj)
 	@echo "  CC      $(notdir $<)"
-	$(Q)$(CC) $(CFLAGS) -c -MMD -MF $(basename $@).d -o $(basename $@).o $<
+	$(Q)$(CC) $(CFLAGS) -c -MMD -MF $(basename $@).d -MT $(basename $@).o \
+		-o $(basename $@).o $<
 
 .PHONY: clean
 clean:
