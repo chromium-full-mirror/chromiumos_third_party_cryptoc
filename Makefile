@@ -46,15 +46,17 @@ $(obj)/libcryptoc.a: $(OBJS)
 
 # Special target which allows to trigger re-compiling of all sources without
 # linking a library.
+.PHONY: objs
 objs: $(OBJS)
 
 $(obj):
 	@echo "  MKDIR   $(obj)"
 	$(Q)mkdir -p $(obj)
 
-$(obj)/%.d $(obj)/%.o: %.c | $(obj)
+$(obj)/%.o: %.c | $(obj)
 	@echo "  CC      $(notdir $<)"
-	$(Q)$(CC) $(CFLAGS) -c -MMD -MF $(basename $@).d -MT $(basename $@).o \
+	$(Q)$(CC) $(CFLAGS) -c \
+		-MMD -MP -MF $(basename $@).d -MT $(basename $@).o \
 		-o $(basename $@).o $<
 
 .PHONY: clean
@@ -62,6 +64,6 @@ clean:
 	@echo "  RM      $(obj)"
 	$(Q)rm -rf $(obj)
 
-ifneq ($(MAKECMDGOALS),clean)
+# Don't forget, this include line can trigger builds for the $(DEPS),
+# so do not provide a rule to make %.d.
 -include $(DEPS)
-endif
