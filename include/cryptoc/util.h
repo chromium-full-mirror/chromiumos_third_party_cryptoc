@@ -27,7 +27,7 @@ void *always_memset(void *s, int c, size_t n);
 
 /* Constant-time memory equality test. Returns 0 to indicate equivalence to
  * behave in a memcmp()-compatible way. */
-int ct_memeq(const void* s1, const void* s2, uint32_t n);
+int ct_memeq(const void* s1, const void* s2, size_t n);
 
 #ifdef __cplusplus
 }
