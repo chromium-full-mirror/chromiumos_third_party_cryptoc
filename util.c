@@ -24,7 +24,7 @@ void *always_memset(void *s, int c, size_t n) {
 }
 
 int ct_memeq(const void* s1, const void* s2, size_t n) {
-  uint8_t diff = 0;
+  volatile uint8_t diff = 0;
   const uint8_t* ps1 = s1;
   const uint8_t* ps2 = s2;
 
